@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import { Add } from "./pages/Add";
 import { Book } from "./pages/Book";
 import { Update } from "./pages/Update";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,9 +21,11 @@ function App() {
   ]);
 
   return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
+    <>
+      <div className="container">
+        <RouterProvider router={router} />
+      </div>
+    </>
   );
 }
 
