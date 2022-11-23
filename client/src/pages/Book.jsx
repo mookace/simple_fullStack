@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
+import "./book.css";
 
 export const Book = () => {
   const [books, setBooks] = useState([]);
@@ -19,12 +21,20 @@ export const Book = () => {
     fetchAllBooks();
   }, []);
 
-  console.log("boooook", books);
+  const handleDelete = async (id) => {
+    try {
+      console.log("id", id);
+      await axios.delete("http://localhost:8001/api/delete/" + id);
+      window.location.reload();
+    } catch (error) {
+      console.log({ message: "Fetch Error", error });
+    }
+  };
 
   return (
     <div className="container">
       <h1 className="mt-5 mb-5 text-center text-primary">
-        <b>All Jobs</b>
+        <b>All Books</b>
       </h1>
 
       <div className="row mt-5 mb-5">
@@ -51,12 +61,23 @@ export const Book = () => {
                   </li>
                 </ul>
               </div>
-              <Link to="/add" className="text-center mb-2">
-                <span className="btn btn-primary ">Add New Book</span>
-              </Link>
+              <div className="card-footer">
+                <Button className="btn btn-warning">
+                  <Link to={`/update/${book.id}`}>Update Book</Link>
+                </Button>
+                <Button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(book.id)}
+                >
+                  Delete Book
+                </Button>
+              </div>
             </div>
           </div>
         ))}
+        <Link to="/add" className="text-center mb-2">
+          <span className="btn btn-primary ">Add New Book</span>
+        </Link>
       </div>
     </div>
   );
